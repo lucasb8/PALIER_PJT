@@ -5,8 +5,11 @@
   --font-display: "Fraunces", ui-serif, Georgia, serif;
 }
 
-html {
-  overflow-x: clip;
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 body {
@@ -17,6 +20,12 @@ body {
     radial-gradient(900px 420px at 0% -10%, rgba(196, 81, 44, 0.14), transparent 55%),
     radial-gradient(800px 380px at 100% 0%, rgba(31, 107, 74, 0.12), transparent 50%),
     #f4f0e7;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  body {
+    touch-action: pan-y;
+  }
 }
 
 button,
@@ -261,6 +270,80 @@ label.btn:hover {
   }
 }
 
+.site-bar {
+  container-type: inline-size;
+  container-name: site-bar;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 0.55rem 1rem;
+}
+
+.site-brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-place {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.site-place .picker-inline {
+  width: auto;
+  min-width: 0;
+  max-width: max-content;
+  flex: 1 1 0;
+}
+
+.site-place .picker-face,
+.site-place .picker-value {
+  min-width: 0;
+}
+
+.site-house {
+  min-width: 0;
+  flex: 1 1 0;
+  max-width: max-content;
+  overflow: hidden;
+  color: #78716c;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.site-house::before {
+  content: "·";
+  margin-right: 0.45rem;
+  color: #a8a29e;
+}
+
+.site-tools {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@container site-bar (max-width: 36rem) {
+  .site-tools {
+    margin-left: auto;
+  }
+
+  .site-place {
+    flex: 1 1 100%;
+    order: 3;
+  }
+}
+
 .icon-btn {
   position: relative;
   display: inline-flex;
@@ -339,7 +422,7 @@ label.btn:hover {
 }
 
 .notes-menu {
-  width: 18rem;
+  width: min(18rem, calc(100cqw - 2rem));
   max-height: 18rem;
   overflow: auto;
 }
@@ -426,7 +509,7 @@ label.btn:hover {
   bottom: calc(100% + 0.35rem);
   left: 50%;
   transform: translateX(-50%);
-  max-width: calc(100vw - 1.5rem);
+  max-width: 14rem;
   overflow: hidden;
   padding: 0.2rem 0.45rem;
   border-radius: 0.45rem;

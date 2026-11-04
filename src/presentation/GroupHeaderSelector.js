@@ -81,16 +81,20 @@ export class GroupHeaderSelector {
     });
     const mark = MARK.replace('h-9 w-9', 'h-6 w-6');
     const house = escapeHtml(houseLabel);
+    const houseMark = house
+      ? `<span class="site-house" title="Votre maison dans ce voisinage">${house}</span>`
+      : '';
     this.root.innerHTML = `
-      <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 gap-y-2 px-4 py-2.5">
-        <div class="flex shrink-0 items-center gap-2">
+      <div class="site-bar">
+        <div class="site-brand">
           ${mark}
           <span class="font-display text-lg leading-none">Palier</span>
         </div>
-        ${groups}
-        <span class="hidden min-w-0 truncate text-sm text-stone-500 sm:inline" title="Votre maison dans ce voisinage">${house}</span>
-        <div class="flex w-full flex-wrap items-center gap-1 sm:ml-auto sm:w-auto">
-          <span class="mr-auto min-w-0 flex-1 truncate text-sm text-stone-500 sm:hidden" title="Votre maison dans ce voisinage">${house}</span>
+        <div class="site-place">
+          ${groups}
+          ${houseMark}
+        </div>
+        <div class="site-tools">
           ${iconButton('Mode d’emploi', ICON_GUIDE, `data-guide aria-pressed="${guideOpen ? 'true' : 'false'}"`, 'tip-below')}
           ${iconButton('Réglages', ICON_SETTINGS, `data-settings aria-pressed="${settingsOpen ? 'true' : 'false'}"`, 'tip-below')}
           <div class="notes${notesOpen ? ' is-open' : ''}">
