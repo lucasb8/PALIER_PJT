@@ -42,8 +42,8 @@ export class GuideComponent {
         <section class="panel p-5">
           <h2 class="font-display text-2xl">Par où commencer</h2>
           <ol class="mt-3 grid gap-2 text-sm text-stone-700">
-            <li class="flex items-start gap-3">${mark(ICON_BELL, '', 'Notifications')}<span>1. Le bandeau indique votre voisinage et votre maison. Une seule maison par voisinage. Rejoindre une maison déjà créée attend l’accord de son créateur. La cloche s’ouvre pour agir : Accepter ou Refuser une entrée, OK quand quelqu’un a rejoint, Annuler sa propre demande. Un objet à rendre y est seulement rappelé : le ramener se fait sur l’objet. Le portrait ouvre Se déconnecter.</span></li>
-            <li>2. Dans Objets, regardez où il se trouve. Prenez-le, ou rapportez-le. Une demande de retour y reste écrite en rouge, avec la date.</li>
+            <li class="flex items-start gap-3">${mark(ICON_BELL, '', 'Notifications')}<span>1. Le bandeau indique votre voisinage et votre maison. Une seule maison par voisinage. Rejoindre une maison déjà créée attend l’accord de son créateur. La cloche s’ouvre pour agir : Accepter ou Refuser une entrée, OK quand quelqu’un a rejoint, Annuler sa propre demande. Un objet à rendre y est seulement rappelé : Rendu se fait sur l’objet. Le portrait ouvre Se déconnecter.</span></li>
+            <li>2. Dans Objets, regardez où il se trouve. Récupéré le prend, Rendu le ramène. Une demande de retour y reste écrite en rouge, avec la date.</li>
             <li>3. Ouvrez Calendrier, glissez sur un ou plusieurs jours, choisissez les heures, puis un ou plusieurs objets. Deux maisons peuvent se suivre le même jour si les heures ne se croisent pas.</li>
             <li>4. Un œuf, un colis ou un coup de main se demande dans Demander. Un achat commun se signale d’un pouce dans Achats.</li>
           </ol>
@@ -56,11 +56,11 @@ export class GuideComponent {
         <section class="grid gap-4 md:grid-cols-2">
           <article class="panel p-5">
             <h2 class="font-display text-2xl">Objets</h2>
-            <p class="mt-2 text-sm text-stone-700">C’est là qu’il se trouve vraiment. La ligne « Actuellement » dit dans quelle maison. Prendre le déplace tout de suite, sans horaire. Si le rangement réclame l’objet, une ligne rouge date la demande : Maison 14 a besoin de « Perceuse » depuis le 4 nov. 2026, 08:00.</p>
+            <p class="mt-2 text-sm text-stone-700">C’est là qu’il se trouve vraiment. La ligne « Actuellement » dit dans quelle maison. Récupéré le déplace tout de suite, sans horaire. Si le rangement réclame l’objet, une ligne rouge date la demande : Maison 14 a besoin de « Perceuse » depuis le 4 nov. 2026, 08:00.</p>
           </article>
           <article class="panel p-5">
             <h2 class="font-display text-2xl">Calendrier</h2>
-            <p class="mt-2 text-sm text-stone-700">C’est un créneau à venir. Un clic prend un jour, un glisser en prend plusieurs : l’heure de début est celle du premier, l’heure de fin celle du dernier. Réserver ne déplace rien : l’objet reste où il est. Deux maisons peuvent réserver le même objet le même jour, le matin puis l’après-midi, tant que les heures ne se croisent pas. La maison de rangement peut aussi réserver le sien, pour dire qu’elle s’en sert. La case se grise si le même objet est déjà pris sur ces heures. Orange : le créneau concerne votre maison, parce qu’elle l’a réservé ou parce que l’objet y est rangé. Gris : il est entre d’autres maisons. Chaque ligne rappelle aussi où il est maintenant. La fin du créneau laisse l’objet où il est. Rapporter ou C’est rentré le ramène.</p>
+            <p class="mt-2 text-sm text-stone-700">C’est un créneau à venir. Un clic prend un jour, un glisser en prend plusieurs : l’heure de début est celle du premier, l’heure de fin celle du dernier. Réserver ne déplace rien : l’objet reste où il est. Deux maisons peuvent réserver le même objet le même jour, le matin puis l’après-midi, tant que les heures ne se croisent pas. La maison de rangement peut aussi réserver le sien, pour dire qu’elle s’en sert. La case se grise si le même objet est déjà pris sur ces heures. Orange : le créneau concerne votre maison, parce qu’elle l’a réservé ou parce que l’objet y est rangé. Gris : il est entre d’autres maisons. Chaque ligne rappelle aussi où il est maintenant. La fin du créneau laisse l’objet où il est. Rendu ou C’est rentré le ramène.</p>
             <p class="mt-3 flex items-start gap-3 text-sm text-stone-700">${mark(ICON_TRASH, 'icon-danger', 'Retirer')}<span>Retirer enlève le créneau. La maison qui l’a posé peut le faire, ainsi que la maison de rangement. L’objet reste où il est.</span></p>
           </article>
         </section>
@@ -75,12 +75,12 @@ export class GuideComponent {
 
         <section class="panel p-5">
           <h2 class="font-display text-2xl">Les boutons d’un objet</h2>
-          <p class="mt-2 text-sm text-stone-600">Le nom de chaque icône apparaît au survol.</p>
+          <p class="mt-2 text-sm text-stone-600">Le nom de chaque icône apparaît au survol. Sur un téléphone, il apparaît sous le doigt.</p>
           <dl class="mt-3 grid gap-4 text-sm text-stone-700">
-            ${entry(ICON_TAKE, 'icon-primary', 'Prendre chez moi', 'Vous l’empruntez maintenant. L’icône est là si aucun créneau ne le réserve à une autre maison, ou si le prochain créneau est le vôtre.')}
-            ${entry(ICON_BRING, 'icon-primary', 'Rapporter', 'Vous l’avez chez vous, et ce n’est pas son rangement. Vous le ramenez.')}
+            ${entry(ICON_TAKE, 'icon-primary', 'Récupéré', 'Vous le récupérez maintenant. L’icône est là si aucun créneau ne le réserve à une autre maison, ou si le prochain créneau est le vôtre.')}
+            ${entry(ICON_BRING, 'icon-primary', 'Rendu', 'Vous l’avez chez vous, et ce n’est pas son rangement. Vous le rendez.')}
             ${entry(ICON_DONE, 'icon-primary', 'C’est rentré', 'Vous êtes la maison de rangement. Vous avez récupéré l’objet qui doit être chez vous. Pendant le créneau de la maison qui l’a, cette icône attend.')}
-            ${entry(ICON_RETURN, '', 'Demander le retour', 'Vous êtes la maison de rangement, l’objet est sorti, et le créneau de la maison qui l’a est terminé. Vous lui demandez de le ramener. La demande s’écrit en rouge, avec la date, sur la fiche et dans la cloche. Le ramener se fait avec Rapporter, sur l’objet.')}
+            ${entry(ICON_RETURN, '', 'Demander le retour', 'Vous êtes la maison de rangement, l’objet est sorti, et le créneau de la maison qui l’a est terminé. Vous lui demandez de le ramener. La demande s’écrit en rouge, avec la date, sur la fiche et dans la cloche. Le rendre se fait avec Rendu, sur l’objet.')}
             ${entry(ICON_CALENDAR, '', 'Calendrier', 'Ouvre le jour avec l’objet déjà coché.')}
             ${entry(ICON_HISTORY, '', 'Parcours', 'Montre les déplacements, avec la date et la personne.')}
             ${entry(ICON_TRASH, 'icon-danger', 'Retirer', 'N’apparaît que dans son rangement, sans créneau à venir.')}

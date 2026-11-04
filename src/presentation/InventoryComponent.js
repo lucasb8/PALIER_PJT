@@ -135,8 +135,8 @@ export class InventoryComponent {
     const choice = this.handlers.offline ? '' : item.moveChoice(this.state.activeHouseId, this.itemBookings(item));
     const moveTo = choice === 'prendre' ? this.state.activeHouseId : item.homeHouseId;
     const move = {
-      prendre: ['Prendre chez moi', ICON_TAKE],
-      rapporter: ['Rapporter', ICON_BRING],
+      prendre: ['Récupéré', ICON_TAKE],
+      rapporter: ['Rendu', ICON_BRING],
       rentrer: ['C’est rentré', ICON_DONE],
     }[choice];
     const action = move

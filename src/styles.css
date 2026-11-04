@@ -5,6 +5,10 @@
   --font-display: "Fraunces", ui-serif, Georgia, serif;
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -422,6 +426,8 @@ label.btn:hover {
   bottom: calc(100% + 0.35rem);
   left: 50%;
   transform: translateX(-50%);
+  max-width: calc(100vw - 1.5rem);
+  overflow: hidden;
   padding: 0.2rem 0.45rem;
   border-radius: 0.45rem;
   background: #1c1917;
@@ -429,16 +435,24 @@ label.btn:hover {
   font-size: 0.75rem;
   line-height: 1.2;
   white-space: nowrap;
+  text-overflow: ellipsis;
   pointer-events: none;
   opacity: 0;
 }
 
-.icon-btn:hover::after,
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover::after {
+    opacity: 1;
+  }
+}
+
+.icon-btn.is-tipped::after,
 .icon-btn:focus-visible::after {
   opacity: 1;
 }
 
-.icon-btn:last-child::after {
+.icon-btn:last-child::after,
+.icon-btn.tip-end::after {
   left: auto;
   right: 0;
   transform: none;

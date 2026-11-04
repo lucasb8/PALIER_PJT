@@ -146,9 +146,33 @@ function closePickers(except) {
 
 let pickersBound = false;
 
+function bindTips(root) {
+  const touch = window.matchMedia('(hover: none), (pointer: coarse)');
+  let timer = 0;
+  const clearTips = () => {
+    root.querySelectorAll('.icon-btn.is-tipped').forEach((node) => node.classList.remove('is-tipped'));
+  };
+  root.addEventListener('pointerdown', (event) => {
+    const button = event.target.closest?.('.icon-btn');
+    clearTimeout(timer);
+    clearTips();
+    if (!button || !touch.matches) return;
+    button.classList.add('is-tipped');
+  });
+  root.addEventListener('pointerup', () => {
+    clearTimeout(timer);
+    timer = setTimeout(clearTips, 1200);
+  });
+  root.addEventListener('pointercancel', () => {
+    clearTimeout(timer);
+    clearTips();
+  });
+}
+
 export function bindPickers(root = document) {
   if (pickersBound) return;
   pickersBound = true;
+  bindTips(root);
   root.addEventListener('click', (event) => {
     const option = event.target.closest('.picker-option');
     if (option) {

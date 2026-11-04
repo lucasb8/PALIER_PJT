@@ -101,7 +101,7 @@ export class GroupHeaderSelector {
             </div>
           </div>
           <div class="account">
-            <button type="button" class="icon-btn avatar-btn tip-below" data-account data-tip="${escapeHtml(user?.name || 'Compte')}" aria-label="${escapeHtml(user?.name || 'Compte')}" aria-haspopup="menu" aria-expanded="false">${avatar(user)}</button>
+            <button type="button" class="icon-btn avatar-btn tip-below tip-end" data-account data-tip="${escapeHtml(user?.name || 'Compte')}" aria-label="${escapeHtml(user?.name || 'Compte')}" aria-haspopup="menu" aria-expanded="false">${avatar(user)}</button>
             <div class="account-menu" role="menu" hidden>
               <button type="button" class="account-choice" role="menuitem" data-logout>${escapeHtml(logoutLabel)}</button>
             </div>
