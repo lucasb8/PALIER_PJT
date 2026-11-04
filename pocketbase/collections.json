@@ -1,0 +1,1500 @@
+[
+  {
+    "id": "pal_groups00001",
+    "name": "groups",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\" && created_by = @request.auth.id",
+    "updateRule": "group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "created_by = @request.auth.id",
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_groups_invite_code` ON `groups` (`invite_code`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_groups",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_name_001",
+        "max": 80,
+        "min": 0,
+        "name": "name",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_invite_code_002",
+        "max": 8,
+        "min": 0,
+        "name": "invite_code",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_created_by_003",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "created_by",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_groups",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_groups",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_members0001",
+    "name": "group_members",
+    "type": "base",
+    "system": false,
+    "listRule": "user = @request.auth.id || group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "user = @request.auth.id || group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && user = @request.auth.id",
+    "updateRule": "user = @request.auth.id",
+    "deleteRule": "user = @request.auth.id",
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_members_group_user` ON `group_members` (`group`, `user`)",
+      "CREATE INDEX `idx_members_user` ON `group_members` (`user`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_group_members",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_004",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_user_005",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_group_members",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_group_members",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_houses00001",
+    "name": "houses",
+    "type": "base",
+    "system": false,
+    "listRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && created_by = @request.auth.id && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_houses_group` ON `houses` (`group`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_houses",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_name_006",
+        "max": 80,
+        "min": 0,
+        "name": "name",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_007",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_created_by_house",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "created_by",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_houses",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_houses",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_residents01",
+    "name": "house_residents",
+    "type": "base",
+    "system": false,
+    "listRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && house.created_by = @request.auth.id && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "user = @request.auth.id",
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_residents_group_user` ON `house_residents` (`group`, `user`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_house_residents",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_008",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_house_009",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_user_010",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_house_residents",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_house_residents",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_items000001",
+    "name": "items",
+    "type": "base",
+    "system": false,
+    "listRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "home_house.house_residents_via_house.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_items_group` ON `items` (`group`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_items",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_name_011",
+        "max": 120,
+        "min": 0,
+        "name": "name",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_description_012",
+        "max": 0,
+        "min": 0,
+        "name": "description",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_instructions_item",
+        "max": 0,
+        "min": 0,
+        "name": "instructions",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_image_url_013",
+        "max": 0,
+        "min": 0,
+        "name": "image_url",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "hidden": false,
+        "id": "f_photo_014",
+        "maxSelect": 1,
+        "maxSize": 5242880,
+        "mimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/webp",
+          "image/gif"
+        ],
+        "name": "photo",
+        "presentable": false,
+        "protected": false,
+        "required": false,
+        "system": false,
+        "thumbs": [
+          "400x400"
+        ],
+        "type": "file"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_015",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_home_house_016",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "home_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_current_house_017",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "current_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_items",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_items",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_express0001",
+    "name": "express_requests",
+    "type": "base",
+    "system": false,
+    "listRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && requested_by_user = @request.auth.id && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "requested_by_house.house_residents_via_house.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_express_group` ON `express_requests` (`group`, `status`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_express_requests",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_title_018",
+        "max": 120,
+        "min": 0,
+        "name": "title",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_description_019",
+        "max": 0,
+        "min": 0,
+        "name": "description",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_020",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_requested_by_user_021",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "requested_by_user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_requested_by_house_022",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "requested_by_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "f_status_023",
+        "maxSelect": 1,
+        "name": "status",
+        "presentable": true,
+        "required": true,
+        "system": false,
+        "type": "select",
+        "values": [
+          "pending",
+          "fulfilled"
+        ]
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_fulfilled_by_house_024",
+        "maxSelect": 1,
+        "minSelect": 0,
+        "name": "fulfilled_by_house",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_express_requests",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_express_requests",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_assist00001",
+    "name": "assistance_requests",
+    "type": "base",
+    "system": false,
+    "listRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && requested_by_user = @request.auth.id && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "requested_by_house.house_residents_via_house.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_assistance_group` ON `assistance_requests` (`group`, `status`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_assistance_requests",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_title_025",
+        "max": 120,
+        "min": 0,
+        "name": "title",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_description_026",
+        "max": 0,
+        "min": 0,
+        "name": "description",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_027",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_requested_by_user_028",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "requested_by_user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_requested_by_house_029",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "requested_by_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "f_status_030",
+        "maxSelect": 1,
+        "name": "status",
+        "presentable": true,
+        "required": true,
+        "system": false,
+        "type": "select",
+        "values": [
+          "open",
+          "resolved"
+        ]
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_resolved_by_house_031",
+        "maxSelect": 1,
+        "minSelect": 0,
+        "name": "resolved_by_house",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_assistance_reque",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_assistance_reque",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_returns0001",
+    "name": "return_requests",
+    "type": "base",
+    "system": false,
+    "listRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && requested_by_user = @request.auth.id && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_returns_group` ON `return_requests` (`group`, `status`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_return_requests",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_items000001",
+        "hidden": false,
+        "id": "f_item_032",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "item",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_033",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_home_house_034",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "home_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_holder_house_035",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "holder_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_requested_by_user_036",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "requested_by_user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "f_status_037",
+        "maxSelect": 1,
+        "name": "status",
+        "presentable": true,
+        "required": true,
+        "system": false,
+        "type": "select",
+        "values": [
+          "open",
+          "done"
+        ]
+      },
+      {
+        "hidden": false,
+        "id": "created_return_requests",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_return_requests",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_history0001",
+    "name": "item_history",
+    "type": "base",
+    "system": false,
+    "listRule": "item.group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "item.group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && moved_by_user = @request.auth.id && item.group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": null,
+    "deleteRule": "item.home_house.house_residents_via_house.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_history_item` ON `item_history` (`item`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_item_history",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_items000001",
+        "hidden": false,
+        "id": "f_item_038",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "item",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_from_house_039",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "from_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_to_house_040",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "to_house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_moved_by_user_041",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "moved_by_user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_item_history",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_item_history",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_bookings001",
+    "name": "bookings",
+    "type": "base",
+    "system": false,
+    "listRule": "item.group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "item.group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && booked_by_user = @request.auth.id && item.group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "booked_by_user = @request.auth.id",
+    "deleteRule": "house.house_residents_via_house.user ?= @request.auth.id || item.home_house.house_residents_via_house.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_bookings_item` ON `bookings` (`item`, `start_date`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_bookings",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_items000001",
+        "hidden": false,
+        "id": "f_item_042",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "item",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_house_043",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_booked_by_user_044",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "booked_by_user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "f_start_date_045",
+        "max": "",
+        "min": "",
+        "name": "start_date",
+        "presentable": true,
+        "required": true,
+        "system": false,
+        "type": "date"
+      },
+      {
+        "hidden": false,
+        "id": "f_end_date_046",
+        "max": "",
+        "min": "",
+        "name": "end_date",
+        "presentable": true,
+        "required": true,
+        "system": false,
+        "type": "date"
+      },
+      {
+        "hidden": false,
+        "id": "created_bookings",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_bookings",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_proposals01",
+    "name": "proposals",
+    "type": "base",
+    "system": false,
+    "listRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && created_by_user = @request.auth.id && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "created_by_user = @request.auth.id",
+    "indexes": [
+      "CREATE INDEX `idx_proposals_group` ON `proposals` (`group`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_proposals",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_title_047",
+        "max": 120,
+        "min": 0,
+        "name": "title",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_description_048",
+        "max": 0,
+        "min": 0,
+        "name": "description",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_url_049",
+        "max": 2000,
+        "min": 0,
+        "name": "url",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "hidden": false,
+        "id": "f_estimated_cost_050",
+        "max": null,
+        "min": 0,
+        "name": "estimated_cost",
+        "onlyInt": false,
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "number"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_051",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_created_by_user_052",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "created_by_user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "created_proposals",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_proposals",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_votes000001",
+    "name": "votes",
+    "type": "base",
+    "system": false,
+    "listRule": "proposal.group.group_members_via_group.user ?= @request.auth.id",
+    "viewRule": "proposal.group.group_members_via_group.user ?= @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && voted_by_user = @request.auth.id && proposal.group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "proposal.group.group_members_via_group.user ?= @request.auth.id",
+    "deleteRule": "proposal.group.group_members_via_group.user ?= @request.auth.id",
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_votes_proposal_house` ON `votes` (`proposal`, `house`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_votes",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_proposals01",
+        "hidden": false,
+        "id": "f_proposal_053",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "proposal",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_house_054",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_voted_by_user_055",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "voted_by_user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "f_is_approved_056",
+        "name": "is_approved",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "bool"
+      },
+      {
+        "hidden": false,
+        "id": "created_votes",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_votes",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  },
+  {
+    "id": "pal_joins000001",
+    "name": "house_join_requests",
+    "type": "base",
+    "system": false,
+    "listRule": "user = @request.auth.id || house.created_by = @request.auth.id",
+    "viewRule": "user = @request.auth.id || house.created_by = @request.auth.id",
+    "createRule": "@request.auth.id != \"\" && user = @request.auth.id && house.created_by != @request.auth.id && status = \"pending\" && group.group_members_via_group.user ?= @request.auth.id",
+    "updateRule": "house.created_by = @request.auth.id",
+    "deleteRule": "user = @request.auth.id && status != \"accepted\"",
+    "indexes": [
+      "CREATE INDEX `idx_join_group` ON `house_join_requests` (`group`)"
+    ],
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "id_house_join_requests",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_groups00001",
+        "hidden": false,
+        "id": "f_group_057",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "group",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pal_houses00001",
+        "hidden": false,
+        "id": "f_house_058",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "house",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "_pb_users_auth_",
+        "hidden": false,
+        "id": "f_user_059",
+        "maxSelect": 1,
+        "minSelect": 1,
+        "name": "user",
+        "presentable": false,
+        "required": true,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "f_user_name_join",
+        "max": 80,
+        "min": 0,
+        "name": "user_name",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "hidden": false,
+        "id": "f_status_060",
+        "maxSelect": 1,
+        "name": "status",
+        "presentable": true,
+        "required": true,
+        "system": false,
+        "type": "select",
+        "values": [
+          "pending",
+          "accepted",
+          "refused"
+        ]
+      },
+      {
+        "hidden": false,
+        "id": "f_seen_061",
+        "name": "seen",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "bool"
+      },
+      {
+        "hidden": false,
+        "id": "created_house_join_reque",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "updated_house_join_reque",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ]
+  }
+]
